@@ -1,0 +1,128 @@
+@import "variables";
+
+.chat {
+  flex: 2;
+
+  .chatUser {
+    background-color: $bg-green;
+    height: 40px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 20px;
+    }
+
+    span {
+      color: white;
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+  }
+
+  .messages {
+    background-color: $chat-bg;
+    padding: 10px;
+    height: calc(100% - 140px);
+    overflow: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .message {
+      display: flex;
+      margin-bottom: 20px;
+      gap: 20px;
+
+      .userInfo {
+        img {
+          width: 2rem;
+          height: 2rem;
+          border-radius: 50%;
+          object-fit: cover;
+          background-color: white;
+        }
+      }
+
+      .messageContent {
+        display: flex;
+        flex-direction: column;
+        // margin-top: -15px;
+        gap: 15px;
+        max-width: 80%;
+
+        p {
+          padding: 0;
+          margin: 0;
+          max-width: max-content;
+          background-color: white;
+          padding: 10px 20px;
+          border-radius: 0 10px 10px 10px;
+        }
+
+        img {
+          width: 50%;
+        }
+      }
+
+      &.owner {
+        flex-direction: row-reverse;
+
+        .messageContent {
+          align-items: flex-end;
+
+          p {
+            border-radius: 10px 0 10px 10px;
+            background-color: $btn-green;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+
+  .inputText {
+    background-color: white;
+    height: 40px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    input {
+      width: 100%;
+      border: none;
+      outline: none;
+      letter-spacing: 1px;
+      font-size: 1rem;
+    }
+
+    .send {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      img {
+        width: 2.1rem;
+        height: 2.1rem;
+        cursor: pointer;
+        margin-top: 5px;
+      }
+
+      button {
+        border: none;
+        padding: 10px 15px;
+        color: white;
+        font-size: 0.9rem;
+        background-color: $btn-green;
+        border-radius: 5px;
+      }
+    }
+  }
+}

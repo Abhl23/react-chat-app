@@ -1,0 +1,110 @@
+@import "variables";
+
+.home{
+    background-color: $light-green;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .container{
+        width: 60%;
+        height: 75%;
+        border-radius: 10px;
+        overflow: hidden;
+        display: flex;
+    }
+
+    .leftbar{
+        flex: 1;
+        background-color: $green;
+
+        .navbar{
+            background-color: $dark-green;
+            height: 40px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+
+            img{
+                height: 2.3rem;
+                width: 2.3rem;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+
+            .user{
+                span{
+                    font-size: 1.1rem;
+                    font-weight: 500;
+                    margin-right: 20px;
+                }
+
+                button{
+                    color: white;
+                    background-color: $btn-green;
+                    border: none;
+                    border-radius: 5px;
+                    padding: 5px;
+                    font-size: 0.9rem;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .search{
+            border-bottom: 1px solid white;
+
+            .searchInput{
+                padding: 10px;
+
+                input{
+                    background-color: inherit;
+                    border: none;
+                    outline: none;
+                    color: white;
+
+                    &::placeholder{
+                        color: white;
+                    }
+                }
+            }
+        }
+
+        .userChat{
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            cursor: pointer;
+
+            &:hover{
+                background-color: $dark-green;
+            }
+
+            img{
+                height: 2rem;
+                width: 2rem;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+
+            .userChatInfo{
+                span{
+                    font-size: 18px;
+                    font-weight: 500;
+                }
+
+                p{
+                    margin: 0;
+                    font-size: 14px;
+                }
+            }
+        }
+
+    }
+
+}
