@@ -10,6 +10,7 @@ import {
   updateDoc,
   serverTimestamp,
 } from "firebase/firestore";
+import { useToasts } from "react-toast-notifications";
 
 import { useAuth, useChat } from "../hooks";
 import { db } from "../firebase";
@@ -20,7 +21,9 @@ const SearchBar = () => {
   const [searchedUser, setSearchedUser] = useState(null);
 
   const { user } = useAuth();
-  const {dispatch}=useChat();
+  const { dispatch } = useChat();
+
+  const { addToast } = useToasts();
 
   const handleSearch = async (e) => {
     if (e.key === "Enter") {
@@ -63,21 +66,23 @@ const SearchBar = () => {
         });
 
         await updateDoc(doc(db, "userConversations", searchedUser.uid), {
-            [combinedId + ".userInfo"]: {
-              uid: user.uid,
-              displayName: user.displayName,
-              photoURL: user.photoURL,
-            },
-            [combinedId + ".date"]: serverTimestamp(),
-          });
+          [combinedId + ".userInfo"]: {
+            uid: user.uid,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
       }
     } catch (error) {
-      console.log("Error", error);
+      return addToast(error, {
+        appearance: "error",
+      });
     }
-    
+
     dispatch({
-        type: "CHANGE_USER",
-        payload: userInfo
+      type: "CHANGE_USER",
+      payload: userInfo,
     });
 
     setSearchedUser(null);
@@ -96,7 +101,10 @@ const SearchBar = () => {
         />
       </div>
       {searchedUser && (
-        <div className={styles.userChat} onClick={() => addUserToChat(searchedUser)}>
+        <div
+          className={styles.userChat}
+          onClick={() => addUserToChat(searchedUser)}
+        >
           <img src={searchedUser.photoURL} alt="dp" />
           <div className={styles.userChatInfo}>
             <span>{searchedUser.displayName}</span>

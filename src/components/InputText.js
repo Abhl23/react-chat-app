@@ -8,6 +8,7 @@ import {
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
+import { useToasts } from "react-toast-notifications";
 
 import { db, storage } from "../firebase";
 import { useAuth, useChat } from "../hooks";
@@ -20,9 +21,13 @@ const InputText = () => {
   const { user } = useAuth();
   const { data } = useChat();
 
+  const { addToast } = useToasts();
+
   const handleSend = async () => {
-    if(!text && !image){
-      return;
+    if (!text && !image) {
+      return addToast("Messages can't be empty!", {
+        appearance: "error",
+      });;
     }
 
     if (image) {
@@ -32,7 +37,9 @@ const InputText = () => {
 
       uploadTask.on(
         (error) => {
-          console.log("Error", error);
+          return addToast(error, {
+            appearance: "error",
+          });
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {

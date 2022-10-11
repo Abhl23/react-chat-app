@@ -3,6 +3,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
+import { useToasts } from "react-toast-notifications";
 
 import { auth, storage, db } from "../firebase";
 import { useChat, useFormInput } from "../hooks";
@@ -18,6 +19,8 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const { dispatch } = useChat();
+
+  const { addToast } = useToasts();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,7 +40,9 @@ const Signup = () => {
 
       uploadTask.on(
         (error) => {
-          console.log("Error", error);
+          return addToast(error, {
+            appearance: "error",
+          });
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
@@ -60,11 +65,17 @@ const Signup = () => {
         }
       );
     } catch (error) {
-      console.log("Error:", error);
+      addToast(error, {
+        appearance: "error",
+      });
     }
 
     dispatch({
       type: "RESET_USER",
+    });
+
+    addToast("Signed up successfully!", {
+      appearance: "success",
     });
   };
 

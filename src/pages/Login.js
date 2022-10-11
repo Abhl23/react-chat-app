@@ -1,5 +1,6 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { useToasts } from "react-toast-notifications";
 
 import { auth } from "../firebase";
 import { useChat, useFormInput } from "../hooks";
@@ -12,6 +13,8 @@ const Login = () => {
   const navigate = useNavigate();
   const { dispatch } = useChat();
 
+  const { addToast } = useToasts();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -20,11 +23,17 @@ const Login = () => {
 
       navigate("/");
     } catch (error) {
-      console.log("Error", error);
+      addToast(error, {
+        appearance: "error",
+      });
     }
 
     dispatch({
       type: "RESET_USER",
+    });
+
+    addToast("Logged in successfully!", {
+      appearance: "success",
     });
   };
 
