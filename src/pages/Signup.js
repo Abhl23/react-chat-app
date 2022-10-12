@@ -16,6 +16,8 @@ const Signup = () => {
 
   const [avatar, setAvatar] = useState(null);
 
+  const [signingUp, setSigningUp] = useState(false);
+
   const navigate = useNavigate();
 
   const { dispatch } = useChat();
@@ -25,7 +27,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(username.value, email.value, password.value, avatar);
+    setSigningUp(true);
 
     try {
       const response = await createUserWithEmailAndPassword(
@@ -40,6 +42,8 @@ const Signup = () => {
 
       uploadTask.on(
         (error) => {
+          setSigningUp(false);
+
           return addToast(error, {
             appearance: "error",
           });
@@ -65,6 +69,8 @@ const Signup = () => {
         }
       );
     } catch (error) {
+      setSigningUp(false);
+
       addToast(error, {
         appearance: "error",
       });
@@ -73,6 +79,8 @@ const Signup = () => {
     dispatch({
       type: "RESET_USER",
     });
+
+    setSigningUp(false);
 
     addToast("Signed up successfully!", {
       appearance: "success",
@@ -101,7 +109,9 @@ const Signup = () => {
             />
             <span>Add an avatar</span>
           </label>
-          <button>Sign Up</button>
+          <button disabled={signingUp}>
+            {signingUp ? "Signing Up..." : "Sign Up"}
+          </button>
         </form>
         <p>
           Already have an account? <Link to="/login">Log In</Link>

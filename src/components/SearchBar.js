@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   collection,
   query,
@@ -25,6 +25,12 @@ const SearchBar = () => {
 
   const { addToast } = useToasts();
 
+  useEffect(() => {
+    if (searchText === "") {
+      setSearchedUser(null);
+    }
+  }, [searchText]);
+
   const handleSearch = async (e) => {
     if (e.key === "Enter") {
       const q = query(
@@ -39,7 +45,7 @@ const SearchBar = () => {
     }
   };
 
-  const addUserToChat = async (userInfo) => {
+  const addUserToChat = async () => {
     const combinedId =
       searchedUser.uid > user.uid
         ? searchedUser.uid + user.uid
@@ -82,7 +88,7 @@ const SearchBar = () => {
 
     dispatch({
       type: "CHANGE_USER",
-      payload: userInfo,
+      payload: searchedUser,
     });
 
     setSearchedUser(null);
@@ -103,7 +109,7 @@ const SearchBar = () => {
       {searchedUser && (
         <div
           className={styles.userChat}
-          onClick={() => addUserToChat(searchedUser)}
+          onClick={() => addUserToChat()}
         >
           <img src={searchedUser.photoURL} alt="dp" />
           <div className={styles.userChatInfo}>

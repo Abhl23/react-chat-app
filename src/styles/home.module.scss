@@ -1,110 +1,205 @@
 @import "variables";
 
-.home{
-    background-color: $light-green;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.home {
+  background-color: $light-green;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    .container{
-        width: 60%;
-        height: 75%;
-        border-radius: 10px;
-        overflow: hidden;
-        display: flex;
+  .container {
+    width: 60%;
+    height: 75%;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+  }
+
+  .leftbar {
+    flex: 1;
+    background-color: $green;
+
+    .navbar {
+      background-color: $dark-green;
+      height: 40px;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+
+      img {
+        height: 2.3rem;
+        width: 2.3rem;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .user {
+        span {
+          font-size: 1.1rem;
+          font-weight: 500;
+          margin-right: 20px;
+        }
+
+        button {
+          color: white;
+          background-color: $btn-green;
+          border: none;
+          border-radius: 5px;
+          padding: 5px;
+          font-size: 0.9rem;
+          cursor: pointer;
+        }
+      }
     }
 
-    .leftbar{
-        flex: 1;
-        background-color: $green;
+    .search {
+      border-bottom: 1px solid white;
 
-        .navbar{
-            background-color: $dark-green;
-            height: 40px;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+      .searchInput {
+        padding: 10px;
+
+        input {
+          background-color: inherit;
+          border: none;
+          outline: none;
+          color: white;
+
+          &::placeholder {
             color: white;
+          }
+        }
+      }
+    }
 
-            img{
-                height: 2.3rem;
-                width: 2.3rem;
-                border-radius: 50%;
-                object-fit: cover;
-            }
+    .userChat {
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      cursor: pointer;
 
-            .user{
-                span{
-                    font-size: 1.1rem;
-                    font-weight: 500;
-                    margin-right: 20px;
-                }
+      &:hover {
+        background-color: $dark-green;
+      }
 
-                button{
-                    color: white;
-                    background-color: $btn-green;
-                    border: none;
-                    border-radius: 5px;
-                    padding: 5px;
-                    font-size: 0.9rem;
-                    cursor: pointer;
-                }
-            }
+      img {
+        height: 2rem;
+        width: 2rem;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .userChatInfo {
+        span {
+          font-size: 18px;
+          font-weight: 500;
         }
 
-        .search{
-            border-bottom: 1px solid white;
+        p {
+          margin: 0;
+          font-size: 14px;
+        }
+      }
+    }
 
-            .searchInput{
-                padding: 10px;
+    .newConvoContainer {
+      display: flex;
+      align-items: center;
+      padding: 10px 15px;
+      border-bottom: 1px solid white;
+      justify-content: space-between;
 
-                input{
-                    background-color: inherit;
-                    border: none;
-                    outline: none;
-                    color: white;
+      span {
+        color: white;
+        font-size: 1rem;
+        letter-spacing: 0.5px;
+        word-spacing: 1px;
+        font-weight: 500;
+      }
 
-                    &::placeholder{
-                        color: white;
-                    }
-                }
-            }
+      img {
+        margin-top: 2px;
+        height: 1.5rem;
+        width: 1.5rem;
+      }
+
+      &:hover {
+        background-color: $dark-green;
+        cursor: pointer;
+      }
+    }
+
+    .overlay {
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      position: fixed;
+      background: rgba(219, 229, 221, 0.7);
+
+      .modal {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        line-height: 1.4;
+        border-radius: 5px;
+        max-width: 600px;
+        min-width: 400px;
+        overflow: hidden;
+
+        .heading{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 14px 28px;
+          color: white;
+          font-weight: bold;
+          font-size: 1.2rem;
+          font-family: sans-serif;
+          letter-spacing: 1px;
+          background-color: $dark-green
         }
 
-        .userChat{
-            padding: 10px;
+        .usersList{
+          overflow: scroll;
+
+          &::-webkit-scrollbar{
+            display: none;
+          }
+
+          div{
             display: flex;
             align-items: center;
-            gap: 10px;
-            color: white;
-            cursor: pointer;
+            gap: 20px;
+            padding: 12px 24px;
+            background-color: $btn-green;
 
             &:hover{
-                background-color: $dark-green;
+              background-color: $bg-green;
+              cursor: pointer;
             }
 
             img{
-                height: 2rem;
-                width: 2rem;
-                border-radius: 50%;
-                object-fit: cover;
+              width: 2rem;
+              height: 2rem;
+              border-radius: 50%;
+              object-fit: cover;
             }
 
-            .userChatInfo{
-                span{
-                    font-size: 18px;
-                    font-weight: 500;
-                }
-
-                p{
-                    margin: 0;
-                    font-size: 14px;
-                }
+            span{
+              color: white;
+              font-weight: 500;
+              font-size: 1.2rem;
             }
+          }
         }
-
+      }
     }
-
+  }
 }

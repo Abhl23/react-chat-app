@@ -1,4 +1,5 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 
@@ -9,6 +10,7 @@ import styles from "../styles/signup.module.scss";
 const Login = () => {
   const email = useFormInput("");
   const password = useFormInput("");
+  const [loggingIn, setLoggingIn] = useState(false);
 
   const navigate = useNavigate();
   const { dispatch } = useChat();
@@ -18,11 +20,15 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setLoggingIn(true);
+
     try {
       await signInWithEmailAndPassword(auth, email.value, password.value);
 
       navigate("/");
     } catch (error) {
+      setLoggingIn(false);
+
       addToast(error, {
         appearance: "error",
       });
@@ -31,6 +37,8 @@ const Login = () => {
     dispatch({
       type: "RESET_USER",
     });
+
+    setLoggingIn(false);
 
     addToast("Logged in successfully!", {
       appearance: "success",
@@ -45,7 +53,9 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           <input type="email" placeholder="email" {...email} />
           <input type="password" placeholder="password" {...password} />
-          <button style={{ marginTop: 10 }}>Sign In</button>
+          <button style={{ marginTop: 10 }} disabled={loggingIn}>
+            {loggingIn ? "Signing In..." : "Sign In"}
+          </button>
         </form>
         <p>
           Don't have an account? <Link to="/signup">Sign Up</Link>
