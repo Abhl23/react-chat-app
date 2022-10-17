@@ -12,17 +12,15 @@ uuid => It is used to create unique ids for documents in the firebase firestore.
 
 # Features
 
-1. Has login, logout and signup functionalities.
+- Has login, logout and signup functionalities.
 
-2. Displays all the conversations on the left side with the Contact name and the last message of the chat.
+- Displays all the conversations on the left side with the Contact name and the last message of the chat.
 
-3. Has a search functionality where you can search for a user by their username and start a conversation with them.
+- Has a search functionality where you can search for a user by their username and start a conversation with them.
 
-4. New Conversation button => On clicking this open a pop up and load all the contacts.
+- On clicking the New Conversation button a pop up opens and load all the contacts and by clicking on any of the contacts a new conversation is started(if it exists) or an existing conversation is opened.
 
-                           => On clicking the contact should start a new conversation (if no conversation was previously started). Or open the existing conversation for that contact.
-
-5. You can send messages containing texts and images to any user on the app.
+- You can send messages containing texts and images to any user on the app.
 
 
 # Getting Started with Create React App
