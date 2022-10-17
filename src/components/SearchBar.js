@@ -18,6 +18,7 @@ import styles from "../styles/home.module.scss";
 
 const SearchBar = () => {
   const [searchText, setSearchText] = useState("");
+  // state to store the searched user
   const [searchedUser, setSearchedUser] = useState(null);
 
   const { user } = useAuth();
@@ -31,13 +32,16 @@ const SearchBar = () => {
     }
   }, [searchText]);
 
+  // handles the search functionality when pressed 'Enter'
   const handleSearch = async (e) => {
     if (e.key === "Enter") {
+      // creates a query to get the searched user from the 'users' collection
       const q = query(
         collection(db, "users"),
         where("displayName", "==", searchText)
       );
 
+      // gets multiple documents which satisfy the query
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         setSearchedUser(doc.data());
@@ -45,6 +49,7 @@ const SearchBar = () => {
     }
   };
 
+  // handles adding the user to conversations list and opening of the chat
   const addUserToChat = async () => {
     const combinedId =
       searchedUser.uid > user.uid
@@ -86,6 +91,7 @@ const SearchBar = () => {
       });
     }
 
+    // changes the global chat state with new user info
     dispatch({
       type: "CHANGE_USER",
       payload: searchedUser,

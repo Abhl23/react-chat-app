@@ -5,12 +5,14 @@ import { useAuth, useChat } from "../hooks";
 import styles from "../styles/home.module.scss";
 
 const Conversations = () => {
-  const [chats, setChats] = useState([]);
+  const [chats, setChats] = useState({});
 
   const { user } = useAuth();
   const { dispatch } = useChat();
 
+  // fetches all the conversations of the current user
   useEffect(() => {
+    // listens to current user's document on 'userConversations' collection
     const unsub = onSnapshot(doc(db, "userConversations", user.uid), (doc) => {
       setChats(doc.data());
     });
@@ -20,6 +22,7 @@ const Conversations = () => {
     };
   }, [user.uid]);
 
+  // opens the chat of the selected user
   const handleOpenChat = (userInfo) => {
     dispatch({
       type: "CHANGE_USER",
@@ -29,8 +32,8 @@ const Conversations = () => {
 
   return (
     <div className={styles.conversations}>
-      {Object.entries(chats)
-        .sort((a, b) => b[1].date - a[1].date)
+      {Object.entries(chats)                    // returns the object's every key-value pair as an array
+        .sort((a, b) => b[1].date - a[1].date)      // sorts the array from latest to oldest
         .map((chat) => (
           <div
             className={styles.userChat}

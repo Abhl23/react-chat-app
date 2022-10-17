@@ -10,9 +10,11 @@ const Page404 = () => {
   return <h1>404 : Page not found!</h1>;
 };
 
+// a private route made for authenticated pages
 const PrivateRoute = ({ children }) => {
   const { user } = useAuth();
 
+  // if the user is not signed-in redirect to login page
   if (!user) {
     return <Navigate replace to="/login" />;
   }
@@ -21,6 +23,7 @@ const PrivateRoute = ({ children }) => {
 };
 
 function App() {
+  // customHook gets the authenticated user info
   const { user, loading } = useAuth();
   console.log("auth in App", user);
 
@@ -30,6 +33,7 @@ function App() {
 
   return (
     <Routes>
+      {/* sets up a private route for Home page */}
       <Route
         path="/"
         element={

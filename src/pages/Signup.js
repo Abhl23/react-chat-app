@@ -14,6 +14,7 @@ const Signup = () => {
   const email = useFormInput("");
   const password = useFormInput("");
 
+  // state to store the user's profile picture
   const [avatar, setAvatar] = useState(null);
 
   const [signingUp, setSigningUp] = useState(false);
@@ -30,14 +31,16 @@ const Signup = () => {
     setSigningUp(true);
 
     try {
+      // creates a new user in firebase
       const response = await createUserWithEmailAndPassword(
         auth,
         email.value,
         password.value
       );
 
+      // Creates a reference and file name for the avatar
       const storageRef = await ref(storage, username.value);
-
+      // uploads the avatar to cloud storage
       const uploadTask = uploadBytesResumable(storageRef, avatar);
 
       uploadTask.on(
@@ -49,12 +52,14 @@ const Signup = () => {
           });
         },
         () => {
+          // gets the download URL of the uploaded avatar
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
             await updateProfile(response.user, {
               displayName: username.value,
               photoURL: downloadURL,
             });
 
+            // creates a document in users collection
             await setDoc(doc(db, "users", response.user.uid), {
               uid: response.user.uid,
               displayName: username.value,
@@ -62,6 +67,7 @@ const Signup = () => {
               photoURL: downloadURL,
             });
 
+            // creates a document in userConversations collection
             await setDoc(doc(db, "userConversations", response.user.uid), {});
 
             navigate("/");
@@ -76,6 +82,7 @@ const Signup = () => {
       });
     }
 
+    // dispatches an action to reset the global chat state
     dispatch({
       type: "RESET_USER",
     });

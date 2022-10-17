@@ -1,6 +1,8 @@
 import { createContext } from "react";
 import { useProvideAuth } from "../hooks";
 
+// global auth state => contains info of the authenticated user
+// default value of the global auth state
 const initialState = {
   user: null,
   loading: true,

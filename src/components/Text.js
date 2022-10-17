@@ -7,9 +7,11 @@ const Text = ({ message }) => {
   const { user } = useAuth();
   const { data } = useChat();
 
+  // useRef hook to access the latest message in DOM 
   const ref = useRef();
 
   useEffect(() => {
+    // scrolls down to the latest message
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
 

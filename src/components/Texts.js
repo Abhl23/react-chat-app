@@ -13,6 +13,7 @@ const Texts = () => {
 
   useEffect(() => {
     const getMessages = () => {
+        // listens to any changes in 'chats' collection
         const unsub = onSnapshot(doc(db, "chats", data.chatId), (doc) => {
             doc.exists() && setMessages(doc.data().messages);
           });

@@ -10,6 +10,7 @@ import styles from "../styles/signup.module.scss";
 const Login = () => {
   const email = useFormInput("");
   const password = useFormInput("");
+  // boolean state maintained to disable the login button
   const [loggingIn, setLoggingIn] = useState(false);
 
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const Login = () => {
     setLoggingIn(true);
 
     try {
+      // firebase/auth function to sign-in a user
       await signInWithEmailAndPassword(auth, email.value, password.value);
 
       navigate("/");
@@ -34,6 +36,7 @@ const Login = () => {
       });
     }
 
+    // dispatches an action to reset the global chat state
     dispatch({
       type: "RESET_USER",
     });

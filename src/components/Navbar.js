@@ -17,6 +17,7 @@ const Navbar = () => {
         <span>{user.displayName}</span>
         <button
           onClick={() => {
+            // firebase/auth function to sign out the user
             signOut(auth);
             addToast("Signed out successfully!", {
               appearance: "success",

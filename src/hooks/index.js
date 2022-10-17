@@ -5,10 +5,12 @@ import { auth } from "../firebase";
 import { AuthContext } from "../providers/AuthProvider";
 import { ChatContext } from "../providers/ChatProvider";
 
+// returns the global auth state
 export const useAuth = () => {
   return useContext(AuthContext);
 };
 
+// returns the global chat state
 export const useChat = () => {
   return useContext(ChatContext);
 };
@@ -18,6 +20,7 @@ export const useProvideAuth = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // this listener gets the currently signed-in user
     const unsub = onAuthStateChanged(auth, (user) => {
       setAuthUser(user);
       setLoading(false);
@@ -34,6 +37,7 @@ export const useProvideAuth = () => {
   };
 };
 
+// customHook created to take and handle form inputs
 export const useFormInput = (initialValue) => {
   const [value, setValue] = useState(initialValue);
 

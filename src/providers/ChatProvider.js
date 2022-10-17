@@ -5,12 +5,15 @@ export const ChatContext = createContext();
 
 export const ChatProvider = ({ children }) => {
   const { user } = useAuth();
-  
+
+  // global chat state => contains info about the user you're chatting to
+  // default value of global chat state
   const INITIAL_STATE = {
     user: null,
     chatId: "",
   };
 
+  // contains the state logic for the global chat state
   const chatReducer = (state, action) => {
     switch (action.type) {
       case "CHANGE_USER":

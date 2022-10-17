@@ -15,6 +15,7 @@ import { useAuth, useChat } from "../hooks";
 import styles from "../styles/home.module.scss";
 
 const NewConversation = () => {
+  // boolean state maintained to show or hide the pop-up
   const [visible, setVisible] = useState(false);
   const [users, setUsers] = useState([]);
 
@@ -24,9 +25,11 @@ const NewConversation = () => {
   const { addToast } = useToasts();
 
   useEffect(() => {
+    // listens to the 'users' collection
     const unsub = onSnapshot(collection(db, "users"), (querySnapshot) => {
       const filteredUsers = [];
 
+      // gets all the users except the signed in user
       querySnapshot.forEach((doc) => {
         if (doc.data().uid !== user.uid) {
           filteredUsers.push(doc.data());
@@ -41,6 +44,7 @@ const NewConversation = () => {
     };
   }, [user.uid]);
 
+  // handles starting of chat with the selected user
   const startChatWithUser = async (userInfo) => {
     const combinedId =
       userInfo.uid > user.uid
@@ -82,6 +86,7 @@ const NewConversation = () => {
       });
     }
 
+    // changes the user info in global chat state
     dispatch({
       type: "CHANGE_USER",
       payload: userInfo,

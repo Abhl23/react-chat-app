@@ -24,15 +24,18 @@ const InputText = () => {
   const { addToast } = useToasts();
 
   const handleSend = async () => {
+    // checks if the message being sent is empty 
     if (!text && !image) {
       return addToast("Messages can't be empty!", {
         appearance: "error",
       });;
     }
 
+    // if image is present
     if (image) {
+      // creates a reference and name for the image
       const storageRef = ref(storage, uuid());
-
+      // uploads the image to cloud storage bucket
       const uploadTask = uploadBytesResumable(storageRef, image);
 
       uploadTask.on(
@@ -43,7 +46,7 @@ const InputText = () => {
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            console.log("URL", downloadURL);
+            // adds a new message in the 'messages' array in 'chats' collection 
             await updateDoc(doc(db, "chats", data.chatId), {
               messages: arrayUnion({
                 id: uuid(),
@@ -57,6 +60,7 @@ const InputText = () => {
         }
       );
     } else {
+      // if image is not present
       await updateDoc(doc(db, "chats", data.chatId), {
         messages: arrayUnion({
           id: uuid(),
@@ -67,6 +71,7 @@ const InputText = () => {
       });
     }
 
+    // updates the lastMessage in 'userConversations' collection
     if (text) {
       await updateDoc(doc(db, "userConversations", user.uid), {
         [data.chatId + ".lastMessage"]: text,
