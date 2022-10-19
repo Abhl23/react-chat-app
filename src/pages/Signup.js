@@ -30,6 +30,21 @@ const Signup = () => {
 
     setSigningUp(true);
 
+    // check for input fields
+    if (!username.value || !email.value || !password.value) {
+      setSigningUp(false);
+
+      return addToast("Fields cannot be left empty!", {
+        appearance: "error",
+      });
+    } else if (password.value.length < 6) {
+      setSigningUp(false);
+
+      return addToast("Password must be at least 6 characters!", {
+        appearance: "error",
+      });
+    }
+
     try {
       // creates a new user in firebase
       const response = await createUserWithEmailAndPassword(

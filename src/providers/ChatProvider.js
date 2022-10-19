@@ -6,7 +6,7 @@ export const ChatContext = createContext();
 export const ChatProvider = ({ children }) => {
   const { user } = useAuth();
 
-  // global chat state => contains info about the user you're chatting to
+  // global chat state => contains info about the user you're chatting with
   // default value of global chat state
   const INITIAL_STATE = {
     user: null,

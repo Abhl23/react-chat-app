@@ -23,6 +23,15 @@ const Login = () => {
 
     setLoggingIn(true);
 
+    // checks for input fields
+    if (!email.value || !password.value) {
+      setLoggingIn(false);
+
+      return addToast("Fields cannot be left empty!", {
+        appearance: "error",
+      });
+    }
+
     try {
       // firebase/auth function to sign-in a user
       await signInWithEmailAndPassword(auth, email.value, password.value);
